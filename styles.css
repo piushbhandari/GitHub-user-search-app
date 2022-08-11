@@ -216,7 +216,6 @@ body {
 }
 .main__link {
   gap: 1.6rem;
-  flex-wrap: wrap;
 }
 .main__link p,
 .main__link a {
@@ -375,5 +374,8 @@ body {
   }
   .main__stat-result {
     text-align: left;
+  }
+  .main__link {
+    flex-wrap: wrap;
   }
 }
