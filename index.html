@@ -11,7 +11,7 @@
   <body>
     <nav class="navbar flex-between">
       <h1 class="navbar__logo">devfinder</h1>
-      <button class="navbar__themeBtn align-center">
+      <button data-theme="light" class="navbar__themeBtn themeBtn align-center">
         <span class="text">dark</span>
         <img src="./assets/icon-moon.svg" alt="moon" />
       </button>
@@ -22,9 +22,17 @@
         src="./assets/icon-search.svg"
         alt="icon-search"
       />
-      <input type="text" placeholder="Search GitHub username..." />
+      <input
+        class="form__input"
+        type="text"
+        placeholder="Search GitHub username..."
+      />
       <button class="form__search-btn search-btn">Search</button>
     </form>
+    <section class="section-notifs">
+      <h2 class="loading-notif">looooooooooading....</h2>
+      <h2 class="error-notif">uh oh, something went wrong :'(</h2>
+    </section>
     <main class="main">
       <div class="main__avatar-box"></div>
       <div class="main__col2">
@@ -36,7 +44,6 @@
           Joined <span class="date-joined">25 Jan 2011</span>
         </p>
       </div>
-      <!-- <p class="main__bio bio">This profile has no bio</p> -->
       <p class="main__bio bio">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit aperiam
         porro vero cumque est!
@@ -76,7 +83,7 @@
         </ul>
       </div>
     </main>
-
+     
     <script src="./script.js"></script>
   </body>
 </html>
