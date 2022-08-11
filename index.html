@@ -9,16 +9,68 @@
     <title>O.O</title>
   </head>
   <body>
-    devfinder Light Dark Search GitHub username... Search Joined Repos Followers
-    Following
+    <nav class="navbar flex-between">
+      <h1 class="navbar__logo">devfinder</h1>
+      <button class="navbar__themeBtn align-center">
+        <span class="text">dark</span>
+        <img src="./assets/icon-moon.svg" alt="moon" />
+      </button>
+    </nav>
+    <form action="" class="form">
+      <img
+        class="form__search-icon"
+        src="./assets/icon-search.svg"
+        alt="icon-search"
+      />
+      <input type="text" placeholder="Search GitHub username..." />
+      <button class="form__search-btn search-btn">Search</button>
+    </form>
+    <main class="main">
+      <div class="main__avatar-box"></div>
+      <div class="main__name-box">
+        <p class="main__username">The Octocat</p>
+        <p class="main__github__handle">@octocat</p>
+      </div>
+      <p class="main__date-joined">
+        Joined <span class="date-joined">25 Jan 2011</span>
+      </p>
+      <p class="main__bio bio">This profile has no bio</p>
+      <div class="main__row2">
+        <ul class="main__stats">
+          <li class="main__stat">
+            <p class="main__stat-name">Repos</p>
+            <p class="main__stat-result">8</p>
+          </li>
+          <li class="main__stat">
+            <p class="main__stat-name">Followers</p>
+            <p class="main__stat-result">3938</p>
+          </li>
+          <li class="main__stat">
+            <p class="main__stat-name">Following</p>
+            <p class="main__stat-result">9</p>
+          </li>
+        </ul>
+        <ul class="main__links">
+          <li class="main__link align-center">
+            <img src="./assets/icon-location.svg" alt="icon-location.svg" />
+            <a href="#">San Francisco</a>
+          </li>
+          <li class="main__link align-center">
+            <img src="./assets/icon-twitter.svg" alt="icon-twitter" />
+            <p class="main__not-available">Not Available</p>
+          </li>
+          <li class="main__link align-center">
+            <img src="./assets/icon-website.svg" alt="icon-website" />
+            <a href="#">https://github.blog</a>
+          </li>
+          <li class="main__link align-center">
+            <img src="./assets/icon-company.svg" alt="icon-company.svg" />
+            <p class="main__company">@github</p>
+          </li>
+        </ul>
+      </div>
+    </main>
 
     <script src="./script.js"></script>
   </body>
 </html>
-echo "# GitHub-user-search-app" >> README.md
-git init
-git add . 
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/piushbhandari/GitHub-user-search-app.git
-git push -u origin main
