@@ -11,13 +11,18 @@ const notifContainer = document.querySelector(".section-notifs");
 const loadingNotif = document.querySelector(".loading-notif");
 const errorNotif = document.querySelector(".error-notif");
 const mainContainer = document.querySelector(".main");
+
+let urlParams = {
+  search: "",
+  theme: "",
+};
 themeBtn.addEventListener("click", changeTheme);
 document.addEventListener("DOMContentLoaded", (e) => {
-  let currentSearch = getParams();
-  if (currentSearch) {
-    const [value] = currentSearch;
-    searchInput.value = value.key;
-    searchUser(value.key);
+  setTheme();
+  getParams();
+  if (urlParams.search) {
+    searchInput.value = urlParams.search;
+    searchUser(urlParams.search);
   }
 });
 searchBtn.addEventListener("click", (e) => {
@@ -99,7 +104,7 @@ function displayData(data) {
     <ul class="main__links">
       <li class="main__link align-center">
         <img src="./assets/icon-location.svg" alt="icon-location.svg" />
-        <p>${location}</p>
+        <p>${location ? location : "unknown"}</p>
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-twitter.svg" alt="icon-twitter" />
@@ -109,11 +114,11 @@ function displayData(data) {
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-website.svg" alt="icon-website" />
-        <a href="#">${blog}</a>
+        <a href="#">${blog ? blog : "No blog o.o"}</a>
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-company.svg" alt="icon-company.svg" />
-        <p class="main__company">${company}</p>
+        <p class="main__company">${company ? company : "not available"}</p>
       </li>
     </ul>
   </div>
@@ -132,18 +137,26 @@ function formatDate(d) {
 }
 function updateUrl(val) {
   let currentUrl = window.location.href;
-  let newUrl = buildNewUrl(currentUrl, val);
+  let key = Object.keys(val);
+  let [value] = Object.values(val);
+  urlParams = { ...urlParams, [key]: value };
+  let newUrl = buildNewUrl(currentUrl);
   history.pushState(null, "", newUrl);
 }
 
-function buildNewUrl(url, val) {
+function buildNewUrl(url) {
+  const paramObject = new URLSearchParams(urlParams);
   let newUrl = new URL(url);
-  newUrl.searchParams.set(Object.keys(val), Object.values(val));
+  for (const [key, value] of paramObject) {
+    if (value.length > 0) {
+      newUrl.searchParams.set(key, value);
+    }
+  }
+  console.log(newUrl.href);
   return newUrl.href;
 }
 
 function getParams() {
-  let params = [];
   let currentUrl = window.location.href;
   let currentParams = currentUrl.split("?")[1];
 
@@ -152,24 +165,38 @@ function getParams() {
   }
   let formattedParam = new URLSearchParams(currentParams);
   for (const [key, value] of formattedParam) {
-    params.push({ key: value });
+    urlParams = { ...urlParams, [key]: value };
   }
-  return params;
 }
 
 function changeTheme(e) {
+  // const themeText = document.querySelector();
+  // const themeIcon = document.querySelector();
   e.preventDefault();
+  let theme;
   const target = e.target;
-  const currentIcon = e.target;
   const currentTheme = target.getAttribute("data-theme").toLowerCase();
-  console.log(currentTheme);
   if (currentTheme === "light") {
-    target.innerHTML = `<span class="text">light</span>
-    <img src="./assets/icon-sun.svg" alt="sun" />`;
-    target.setAttribute("data-theme", "dark");
+    theme = "dark";
   } else {
-    target.innerHTML = `<span class="text">dark</span>
-    <img src="./assets/icon-moon.svg" alt="moon" />`;
-    target.setAttribute("data-theme", "light");
+    theme = "light";
   }
+  // if (currentTheme === "light") {
+  //   target.innerHTML = `<span class="text">light</span>
+  //   <img src="./assets/icon-sun.svg" alt="sun" />`;
+  //   target.setAttribute("data-theme", "dark");
+  //   urlParams = urlParams;
+  //   theme = "dark";
+  // } else {
+  //   target.innerHTML = `<span class="text">dark</span>
+  //   <img src="./assets/icon-moon.svg" alt="moon" />`;
+  //   target.setAttribute("data-theme", "light");
+  //   theme = "light";
+  // }
+  updateUrl({ theme });
+  console.log(urlParams);
+  setTheme(urlParams.theme);
+}
+function setTheme(theme = "light") {
+  document.documentElement.className = theme;
 }
