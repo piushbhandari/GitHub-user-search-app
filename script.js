@@ -11,6 +11,9 @@ const notifContainer = document.querySelector(".section-notifs");
 const loadingNotif = document.querySelector(".loading-notif");
 const errorNotif = document.querySelector(".error-notif");
 const mainContainer = document.querySelector(".main");
+const themeText = document.querySelector(".text");
+const themeIcon = document.querySelector(".theme-icon");
+const errMsg = document.querySelector(".err-msg");
 
 let urlParams = {
   search: "",
@@ -18,8 +21,8 @@ let urlParams = {
 };
 themeBtn.addEventListener("click", changeTheme);
 document.addEventListener("DOMContentLoaded", (e) => {
-  setTheme();
   getParams();
+  urlParams.theme ? setTheme(urlParams.theme) : setTheme();
   if (urlParams.search) {
     searchInput.value = urlParams.search;
     searchUser(urlParams.search);
@@ -28,7 +31,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
 searchBtn.addEventListener("click", (e) => {
   e.preventDefault();
   let inputValue = searchInput.value;
-  searchUser(inputValue);
+  if (!inputValue) {
+    errMsg.textContent = "Field cannot be empty";
+    errMsg.classList.add("active");
+  } else {
+    errMsg.classList.remove("active");
+    searchUser(inputValue);
+  }
+
   updateUrl({ search: inputValue });
 });
 
@@ -56,6 +66,13 @@ async function fetchApi(url) {
   }
 }
 function displayData(data) {
+  console.log(data);
+  if (data.message) {
+    errMsg.textContent = "No results";
+    errMsg.classList.add("active");
+    mainContainer.classList.remove("active");
+    return;
+  }
   const {
     avatar_url,
     bio,
@@ -104,21 +121,27 @@ function displayData(data) {
     <ul class="main__links">
       <li class="main__link align-center">
         <img src="./assets/icon-location.svg" alt="icon-location.svg" />
-        <p>${location ? location : "unknown"}</p>
+        <p class="${location ? "" : "not-available"}">${
+    location ? location : "unknown"
+  }</p>
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-twitter.svg" alt="icon-twitter" />
-        <p class="main__not-available">${
-          twitter_username ? twitter_username : "Not Available"
-        }</p>
+        <p class="main__not-available ${
+          twitter_username ? "" : "not-available"
+        }">${twitter_username ? twitter_username : "Not Available"}</p>
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-website.svg" alt="icon-website" />
-        <a href="#">${blog ? blog : "No blog o.o"}</a>
+        <a href="#" class="${blog ? "" : "not-available"} link-wrap">${
+    blog ? blog : "No blog o.o"
+  }</a>
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-company.svg" alt="icon-company.svg" />
-        <p class="main__company">${company ? company : "not available"}</p>
+        <p class="main__company ${company ? "" : "not-available"}">${
+    company ? company : "Not available"
+  }</p>
       </li>
     </ul>
   </div>
@@ -152,7 +175,6 @@ function buildNewUrl(url) {
       newUrl.searchParams.set(key, value);
     }
   }
-  console.log(newUrl.href);
   return newUrl.href;
 }
 
@@ -170,33 +192,32 @@ function getParams() {
 }
 
 function changeTheme(e) {
-  // const themeText = document.querySelector();
-  // const themeIcon = document.querySelector();
   e.preventDefault();
   let theme;
   const target = e.target;
   const currentTheme = target.getAttribute("data-theme").toLowerCase();
   if (currentTheme === "light") {
     theme = "dark";
+    themeText.textContent = "light";
+    themeIcon.src = "./assets/icon-sun.svg";
   } else {
     theme = "light";
+    themeText.textContent = "dark";
+    themeIcon.src = "./assets/icon-moon.svg";
   }
-  // if (currentTheme === "light") {
-  //   target.innerHTML = `<span class="text">light</span>
-  //   <img src="./assets/icon-sun.svg" alt="sun" />`;
-  //   target.setAttribute("data-theme", "dark");
-  //   urlParams = urlParams;
-  //   theme = "dark";
-  // } else {
-  //   target.innerHTML = `<span class="text">dark</span>
-  //   <img src="./assets/icon-moon.svg" alt="moon" />`;
-  //   target.setAttribute("data-theme", "light");
-  //   theme = "light";
-  // }
+
+  target.setAttribute("data-theme", theme);
   updateUrl({ theme });
-  console.log(urlParams);
   setTheme(urlParams.theme);
 }
 function setTheme(theme = "light") {
+  if (theme === "light") {
+    themeText.textContent = "dark";
+    themeIcon.src = "./assets/icon-moon.svg";
+  } else {
+    themeText.textContent = "light";
+    themeIcon.src = "./assets/icon-sun.svg";
+  }
+  themeBtn.setAttribute("data-theme", theme);
   document.documentElement.className = theme;
 }

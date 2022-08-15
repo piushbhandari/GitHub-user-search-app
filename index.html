@@ -12,10 +12,8 @@
     <nav class="navbar flex-between">
       <h1 class="navbar__logo">devfinder</h1>
       <button data-theme="light" class="navbar__themeBtn themeBtn align-center">
-        <span class="text dark active">dark</span>
-        <span class="text light">light</span>
-        <span class="theme-icon dark"></span>
-        <!-- <img src="./assets/icon-moon.svg" alt="moon" /> -->
+        <span class="text">dark</span>
+        <img class="theme-icon" src="./assets/icon-moon.svg" alt="moon" />
       </button>
     </nav>
     <form action="" class="form">
@@ -29,6 +27,7 @@
         type="text"
         placeholder="Search GitHub username..."
       />
+      <p class="form__err-msg err-msg">No results</p>
       <button class="form__search-btn search-btn">Search</button>
     </form>
     <section class="section-notifs">

@@ -5,7 +5,6 @@
 .light {
   --body-bg: #f6f8ff;
   --logo: #222731;
-  --themeBtn-text: #222731;
   --input-bg: #fefefe;
   --main-bg: #fefefe;
   --username: #2b3442;
@@ -17,13 +16,15 @@
   --stalking-info: #4b6a9b;
   --input: #222731;
   --box-shadow: 0px 16px 30px -10px rgba(70, 96, 187, 0.198567);
+  --theme-text: #697c9a;
+  --hover: #222731;
+  --na: #4b6a9b;
 }
 /* light */
 /* dark */
 .dark {
   --body-bg: #141d2f;
   --logo: white;
-  --themeBtn-text: #222731;
   --input-bg: #1e2a47;
   --main-bg: #1e2a47;
   --username: white;
@@ -35,6 +36,9 @@
   --stalking-info: white;
   --input: white;
   --box-shadow: none;
+  --theme-text: white;
+  --hover: #90a4d4;
+  --na: rgba(255, 255, 255, 0.5);
 }
 /* dark */
 /* themes */
@@ -122,18 +126,16 @@ body {
   line-height: 1.9rem;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--themeBtn-text);
+  color: var(--theme-text);
+}
+.navbar__themeBtn:hover,
+.navbar__themeBtn:focus {
+  color: var(--hover);
 }
 .theme-icon {
   width: 2rem;
   height: 2rem;
   background-size: contain;
-}
-.theme-icon.dark.active {
-  background-image: url("./assets/icon-moon.svg");
-}
-.theme-icon.light {
-  background-image: url("./assets/icon-light.svg");
 }
 .text.dark,
 .text.light {
@@ -164,6 +166,20 @@ body {
   font-size: 1.8rem;
   line-height: 2.5rem;
 }
+.form__err-msg {
+  position: absolute;
+  right: 14rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f74646;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  display: none;
+}
+.form__err-msg.active {
+  display: block;
+}
 .form__search-btn {
   position: absolute;
   top: 50%;
@@ -176,6 +192,10 @@ body {
   font-weight: 700;
   font-size: 1.6rem;
   line-height: 2.4rem;
+}
+.form__search-btn:hover,
+.form__search-btn:focus {
+  background: #60abff;
 }
 .form__search-icon {
   position: absolute;
@@ -310,6 +330,16 @@ body {
 .main__link a:hover,
 .main__link a:focus {
   text-decoration: underline;
+}
+.not-available {
+  color: var(--na);
+}
+.link-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  word-break: break-word;
+  hyphens: auto;
 }
 @media all and (max-width: 820px) {
   body {
