@@ -133,7 +133,7 @@ function displayData(data) {
       </li>
       <li class="main__link align-center">
         <img src="./assets/icon-website.svg" alt="icon-website" />
-        <a href="#" class="${blog ? "" : "not-available"} link-wrap">${
+        <a href="${blog}" class="${blog ? "" : "not-available"} link-wrap">${
     blog ? blog : "No blog o.o"
   }</a>
       </li>
